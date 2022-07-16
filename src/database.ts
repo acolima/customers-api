@@ -5,7 +5,6 @@ export const mongoClient = new MongoClient(process.env.MONGO_URI);
 await mongoClient.connect();
 
 const databaseName = process.env.DATABASE_NAME;
-console.log(databaseName);
 
 const db = mongoClient.db(databaseName);
 
