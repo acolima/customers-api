@@ -18,8 +18,12 @@ async function create(customer: CreateCustomer) {
 	await customersCollection.insertOne(customer);
 }
 
-async function findByName(name: string) {
-	return await customersCollection.findOne({ name });
+async function findPhone(number: string) {
+	return await customersCollection
+		.find({
+			phoneNumbers: { $elemMatch: { number: number } },
+		})
+		.toArray();
 }
 
 async function findById(id: string) {
@@ -45,7 +49,7 @@ export const customerRepository = {
 	create,
 	deleteCustomer,
 	findById,
-	findByName,
+	findPhone,
 	getAll,
 	update,
 };
