@@ -4,8 +4,12 @@ import db from '../database.js';
 export interface CreateCustomer {
 	name: string;
 	email: string;
-	address: string;
-	phoneNumbers: string[];
+	phoneNumbers: Phone[];
+}
+
+interface Phone {
+	number: string;
+	type: string;
 }
 
 const customersCollection = db.collection('customers');
@@ -23,7 +27,7 @@ async function findById(id: string) {
 }
 
 async function getAll() {
-	return await customersCollection.find({}).toArray();
+	return customersCollection.find({}).sort({ name: 1 }).toArray();
 }
 
 async function update(id: string, customer: CreateCustomer) {
