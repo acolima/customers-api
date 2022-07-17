@@ -28,7 +28,7 @@ describe('customer service unit test', () => {
 			await customerService.createCustomer(customer);
 		}).rejects.toEqual({
 			type: 'conflict',
-			message: 'This number is already saved',
+			message: 'Este número já está salvo',
 		});
 
 		expect(create).not.toBeCalled();
@@ -43,7 +43,7 @@ describe('customer service unit test', () => {
 			await customerService.deleteCustomer('123456789101');
 		}).rejects.toEqual({
 			type: 'not_found',
-			message: 'Customer not found',
+			message: 'Cliente não encontrado',
 		});
 
 		expect(deleteCustomer).not.toBeCalled();

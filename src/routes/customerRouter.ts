@@ -13,6 +13,8 @@ customerRouter.post(
 
 customerRouter.get('/', customerController.getCustomers);
 
+customerRouter.get('/:id', customerController.getCustomer);
+
 customerRouter.put(
 	'/:id',
 	schemaValidation(customerSchema),

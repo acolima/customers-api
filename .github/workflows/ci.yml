@@ -11,6 +11,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_MONGO_URI: 'mongodb://127.0.0.1:27017'
+          envkey_DATABASE_NAME: 'customers-test'
           file_name: .env.test
       - name: Run tests
         run: docker-compose -f docker-compose-test.yml run node_app npm run test

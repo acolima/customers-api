@@ -15,6 +15,14 @@ async function getCustomers(req: Request, res: Response) {
 	res.send(customers);
 }
 
+async function getCustomer(req: Request, res: Response) {
+	const { id } = req.params;
+
+	const customer = await customerService.getCustomer(id);
+
+	res.send(customer);
+}
+
 async function updateCustomer(req: Request, res: Response) {
 	const { id } = req.params;
 	const customer = req.body;
@@ -36,5 +44,6 @@ export const customerController = {
 	createCustomer,
 	deleteCustomer,
 	getCustomers,
+	getCustomer,
 	updateCustomer,
 };
