@@ -8,7 +8,8 @@
 		"build": "tsc",
 		"start": "node ./dist/src/server.js",
 		"dev": "dotenv -e .env.development nodemon src/server.ts",
-		"test": "NODE_OPTIONS=--experimental-vm-modules npx dotenv -e .env.test jest -i"
+		"test": "NODE_OPTIONS=--experimental-vm-modules npx dotenv -e .env.test jest -i",
+		"test:coverage": "NODE_OPTIONS=--experimental-vm-modules npx dotenv -e .env.test jest --coverage"
 	},
 	"keywords": [],
 	"author": "",

@@ -58,15 +58,19 @@ describe('App tests', () => {
 			const customer = customerBodyFactory();
 			const { insertedId } = await customerFactory(customer);
 
-			const result = await supertest(app).put(`/customers/${insertedId}`).send({
-				name: 'John Doe',
-				email: customer.email,
-				phoneNumbers: customer.phoneNumbers,
-			});
+			const newPhone = { number: '19999999999', type: 'mobile' };
+
+			const result = await supertest(app)
+				.put(`/customers/${insertedId}`)
+				.send({
+					name: customer.name,
+					email: customer.email,
+					phoneNumbers: [newPhone],
+				});
 
 			const updatedCustomer = await findCustomerById(insertedId);
 
-			expect(updatedCustomer.name).toEqual('John Doe');
+			expect(updatedCustomer.phoneNumbers).toEqual([newPhone]);
 			expect(result.status).toEqual(200);
 		});
 	});
