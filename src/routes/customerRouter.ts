@@ -13,7 +13,7 @@ customerRouter.post(
 
 customerRouter.get('/', customerController.getCustomers);
 
-customerRouter.get('/:id', customerController.getCustomer);
+customerRouter.get('/search', customerController.getCustomer);
 
 customerRouter.put(
 	'/:id',

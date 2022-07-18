@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { customerService } from '../services/customerService.js';
+import { customerService, SearchBy } from '../services/customerService.js';
 
 async function createCustomer(req: Request, res: Response) {
 	const customer = req.body;
@@ -16,9 +16,11 @@ async function getCustomers(req: Request, res: Response) {
 }
 
 async function getCustomer(req: Request, res: Response) {
-	const { id } = req.params;
+	const filter = req.query as SearchBy;
 
-	const customer = await customerService.getCustomer(id);
+	if (filter !== 'id' && filter !== 'name') return res.sendStatus(400);
+
+	const customer = await customerService.getCustomer(filter);
 
 	res.send(customer);
 }

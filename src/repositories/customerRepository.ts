@@ -30,6 +30,12 @@ async function findById(id: string) {
 	return await customersCollection.findOne({ _id: new ObjectId(id) });
 }
 
+async function findByName(name: string) {
+	return await customersCollection
+		.find({ name: new RegExp(name, 'i') })
+		.toArray();
+}
+
 async function getAll() {
 	return customersCollection.find({}).sort({ name: 1 }).toArray();
 }
@@ -49,6 +55,7 @@ export const customerRepository = {
 	create,
 	deleteCustomer,
 	findById,
+	findByName,
 	findPhone,
 	getAll,
 	update,

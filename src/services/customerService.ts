@@ -4,6 +4,11 @@ import {
 } from '../repositories/customerRepository.js';
 import { error } from '../utils/errorsUtils.js';
 
+export interface SearchBy {
+	id?: string;
+	name?: string;
+}
+
 async function createCustomer(newCustomer: CreateCustomer) {
 	for (const phone of newCustomer.phoneNumbers) {
 		await isNumberSaved(phone.number);
@@ -18,8 +23,11 @@ async function getCustomers() {
 	return customers;
 }
 
-async function getCustomer(id: string) {
-	const customer = await doesCustomerExists(id);
+async function getCustomer(filter: SearchBy) {
+	let customer = {};
+
+	if (filter.id) customer = await customerRepository.findById(filter.id);
+	if (filter.name) customer = await customerRepository.findByName(filter.name);
 
 	return customer;
 }
