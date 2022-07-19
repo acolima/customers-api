@@ -18,8 +18,6 @@ async function getCustomers(req: Request, res: Response) {
 async function getCustomer(req: Request, res: Response) {
 	const filter = req.query as SearchBy;
 
-	if (filter !== 'id' && filter !== 'name') return res.sendStatus(400);
-
 	const customer = await customerService.getCustomer(filter);
 
 	res.send(customer);
