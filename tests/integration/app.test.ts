@@ -44,11 +44,43 @@ describe('App tests', () => {
 	describe('GET /customers', () => {
 		it('should return status 200 and an array of customers', async () => {
 			const customer = customerBodyFactory();
-			customerFactory(customer);
+			await customerFactory(customer);
 
 			const result = await supertest(app).get('/customers');
 
 			expect(result.body.length).toBeGreaterThan(0);
+			expect(result.status).toEqual(200);
+		});
+	});
+
+	describe('GET /customers/search', () => {
+		it('should return status 200 and one customer given id as a query param', async () => {
+			const customer = customerBodyFactory();
+			const { insertedId } = await customerFactory(customer);
+
+			const result = await supertest(app).get(
+				`/customers/search?id=${insertedId}`
+			);
+
+			expect(result.body.name).toEqual(customer.name);
+			expect(result.status).toEqual(200);
+		});
+
+		it('should return status 200 and an array of customers given name as a query param', async () => {
+			const customer1 = customerBodyFactory();
+			const customer2 = {
+				...customer1,
+				phoneNumbers: [{ number: '19999999999', type: 'home' }],
+			};
+
+			await customerFactory(customer1);
+			await customerFactory(customer2);
+
+			const result = await supertest(app).get(
+				`/customers/search?name=${customer1.name}`
+			);
+
+			expect(result.body.length).toBeGreaterThan(1);
 			expect(result.status).toEqual(200);
 		});
 	});
