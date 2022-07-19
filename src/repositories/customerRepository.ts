@@ -51,6 +51,10 @@ async function deleteCustomer(id: string) {
 	await customersCollection.deleteOne({ _id: new ObjectId(id) });
 }
 
+async function resetDB() {
+	await customersCollection.deleteMany({});
+}
+
 export const customerRepository = {
 	create,
 	deleteCustomer,
@@ -58,5 +62,6 @@ export const customerRepository = {
 	findByName,
 	findPhone,
 	getAll,
+	resetDB,
 	update,
 };

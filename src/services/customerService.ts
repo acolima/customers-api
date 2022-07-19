@@ -76,10 +76,15 @@ async function doesCustomerExists(id: string) {
 	return customer;
 }
 
+async function resetDB() {
+	await customerRepository.resetDB();
+}
+
 export const customerService = {
 	createCustomer,
 	deleteCustomer,
 	getCustomers,
 	getCustomer,
+	resetDB,
 	updateCustomer,
 };
