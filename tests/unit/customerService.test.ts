@@ -9,7 +9,7 @@ describe('customer service unit test', () => {
 		mongoClient.close();
 	});
 
-	it('should throw conflict error given duplicate number', async () => {
+	it('should throw conflict error given duplicate number on create', async () => {
 		const customer = {
 			_id: new ObjectId('123456789101'),
 			name: 'João',
@@ -47,5 +47,31 @@ describe('customer service unit test', () => {
 		});
 
 		expect(deleteCustomer).not.toBeCalled();
+	});
+
+	it('should throw conflict error given duplicated phone number on update', async () => {
+		const customer = {
+			_id: new ObjectId('123456789101'),
+			name: 'João',
+			email: 'joao@gmail.com',
+			phoneNumbers: [
+				{ number: '19982390863', type: 'mobile' },
+				{ number: '19982390863', type: 'mobile' },
+			],
+		};
+		jest.spyOn(customerRepository, 'findById').mockResolvedValue(customer);
+
+		jest.spyOn(customerRepository, 'findPhone').mockResolvedValue([customer]);
+
+		const updateCustomer = jest.spyOn(customerRepository, 'update');
+
+		expect(async () => {
+			await customerService.updateCustomer(customer._id.toString(), customer);
+		}).rejects.toEqual({
+			type: 'conflict',
+			message: 'Este número já está salvo',
+		});
+
+		expect(updateCustomer).not.toBeCalled();
 	});
 });
