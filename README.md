@@ -42,7 +42,7 @@ npm i
 
 4. You need to have mongo installed and running
 
-5. Create a `.env` file with the same structure of `.env.example` and change the values of the enviroment variables
+5. Create a `.env.development` file with the same structure of `.env.example` and change the values of the enviroment variables
 
 ```bash
 MONGO_URI=
